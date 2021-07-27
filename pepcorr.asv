@@ -1,0 +1,32 @@
+%input peptide sequence, measured MID, returns simulated MID (natural abundance)
+%and natural ab corrected MID_corr, fval returns the err 
+function [MID_sim,MID_corr,fval]=pepcorr(pep,MID_measure)
+pep=strrep(pep ,'*' ,'L' ); % replace * with L in sequence
+
+out=peptide_mid(pep);
+MID_sim=[out.pct];  % get simulated MID for natural abundance
+
+% sz=min(length(MID_sim),length(MID_measure));  % trancate to the shorter one sz
+% MID_sim=MID_sim(1:sz);
+% MID_measure=MID_measure(1:sz);
+
+% optimization setup to find MID_corr
+sz=length(MID_measure);
+x0=zeros(sz,1)/sz;x0(1)=1;  %initial x
+lb=zeros(sz,1);
+ub=ones(sz,1);
+
+[xopt,fval]=fmincon(@(x)myfit(x,MID_sim,MID_measure),x0,[],[],[],[],lb,ub);
+MID_corr=xopt/sum(xopt)*100;
+end
+
+function fit=myfit(x,MID_sim,MID_measure)
+y=conv(x,MID_sim);  %convolution
+if length(y)>length(MID_measure)
+  y=y(1:length(MID_measure)); %truncate
+else
+  y(length(MID_measure))=0;   %padding 0
+end
+y=y/sum(y)*100;
+fit=sqrt(sum((y-MID_measure).^2));
+end
