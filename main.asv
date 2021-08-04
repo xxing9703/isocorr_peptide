@@ -1,6 +1,8 @@
 % this script is for single peptide test run, with plot 
-fname='m27c_Liver.csv';
+fname='m27c_Liver_test.csv';
+[~,fn]=fileparts(fname);
 T=readtable(fname);
+
 %%
 for i=1:size(T,1);  % loop over peptides
     i
@@ -14,20 +16,15 @@ MID_measure=MID_measure/sum(MID_measure); %normalize to 0-1
 MID_simcorr=conv(MID_corr,MID_sim);
 MID_simcorr=MID_simcorr(1:length(MID_measure));
 out(i).corr=MID_corr;
-out(i).sim=MID_sim;
-out(i).simcorr=MID_simcorr;
 out(i).err=fval;
+out2(i).sim=MID_sim;
+out2(i).simcorr=MID_simcorr;
 end
-%%
-figure
-bar([MID_measure(:),MID_simcorr(:)]);
-%%
-figure,
-stem(MID_sim,'.')
-hold on
-stem(-MID_measure,'.')
-hold on
-stem(conv(MID_corr,MID_sim),'.g')
+Tout=struct2table(out);
+Tout=[T,Tout];
+writetable(struct2table(out),[fn,'_output.csv']);
 
-MID_sim(7)/MID_sim(1)
-MID_measure(7)/MID_measure(1)
+%%
+% figure
+% bar([MID_measure(:),MID_simcorr(:)]);
+
