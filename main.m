@@ -1,4 +1,4 @@
-% this script is for single peptide test run, with plot 
+% this script is for single peptide test run
 clear
 fname='m27c_Liver_test.csv';
 [~,fn]=fileparts(fname);
@@ -29,7 +29,7 @@ try
 end
 Tout=struct2table(out);
 Tout=[T(:,~mask),Tout];
-%writetable(Tout,[fn,'_corrected.csv']);
+writetable(Tout,[fn,'_corrected.csv']);
 
 %%
 % figure
