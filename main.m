@@ -6,7 +6,7 @@ T=readtable(fname);
 
 %%
 for i=1:size(T,1);  % loop over peptides
-    i
+ fprintf(['... <',fn,'>  i=',num2str(i),'\n']);
 pep=T{i,13}; %peptide sequence location column 13
 pep=pep{1};
 mask = startsWith(T.Properties.VariableNames, 'Area');

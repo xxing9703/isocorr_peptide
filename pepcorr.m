@@ -21,7 +21,9 @@ if nargin==3
 end
 if sum(MID_measure)>0
 MID_measure=MID_measure/sum(MID_measure);  % normalize to (0-1)
-[xopt,fval]=fmincon(@(x)myfit(x,MID_sim,MID_measure),x0,[],[],[],[],lb,ub);
+options = optimoptions('fmincon','display','off');
+[xopt,fval]=fmincon(@(x)myfit(x,MID_sim,MID_measure),x0,[],[],[],[],lb,ub,[],options);
+
 MID_corr=xopt'/sum(xopt);
 else
 MID_corr=zeros(1,length(MID_measure));
