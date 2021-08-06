@@ -1,6 +1,6 @@
 % this script is for single peptide test run
 clear
-fname='m27c_Liver_test.csv';
+fname='m27c_Liver.csv';
 [~,fn]=fileparts(fname);
 T=readtable(fname);
 

@@ -77,7 +77,7 @@ end
 
 [~,ind]=sort([tb.ab],'descend'); %sorting
 tb=tb(ind);
-cutoff=0.0000001;%apply cutoff
+cutoff=0.00001;%apply cutoff
 ind=find([tb.ab]>cutoff);  
 tb=tb(ind);
 %tb_save1=tb; % for debug
