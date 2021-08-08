@@ -1,11 +1,13 @@
 % this script is for single peptide test run
 clear
-fname='m27c_Liver.csv';
+
+fname='m27c_Liver_test.csv';
 [~,fn]=fileparts(fname);
 T=readtable(fname);
 
 %%
-for i=1:size(T,1);  % loop over peptides
+tic
+for i=1:size(T,1)  % loop over peptides
  fprintf(['... <',fn,'>  i=',num2str(i),'\n']);
 pep=T{i,13}; %peptide sequence location column 13
 pep=pep{1};
@@ -27,6 +29,7 @@ try
    out(i).sum=nan;  
  end
 end
+toc
 Tout=struct2table(out);
 Tout=[T(:,~mask),Tout];
 writetable(Tout,[fn,'_corrected.csv']);

@@ -3,7 +3,7 @@
 %constrain is optional, set the upper bounds (0-1) for corrected MID
 function [MID_sim,MID_corr,fval]=pepcorr(pep,MID_measure,constrain)
 pep=strrep(pep ,'*' ,'L' ); % replace * with L in sequence
-out=peptide_mid(pep);
+out=peptide_mid1(pep);
 MID_sim=[out.pct];  % get simulated MID for natural abundance(0-100)
 MID_sim=MID_sim/sum(MID_sim); %(0-1)
 % sz=min(length(MID_sim),length(MID_measure));  % trancate to the shorter one sz

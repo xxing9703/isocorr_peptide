@@ -86,6 +86,8 @@ ct=length(tb);
 for i=1:length(tb)
     for j=i:length(tb)
         if isempty(intersect(tb(i).type,tb(j).type))
+         %v=[tb(i).type,tb(j).type];
+         %if hasNoRepeats(v)
             tp=tb(i).ab*tb(j).ab/ab_0;
           if tp>cutoff
               ct=ct+1;
@@ -130,4 +132,17 @@ for i=1:round(max([tb.dmz]))
 end
 for i=1:round(max([tb.dmz]))+1
    out(i).pctMax=out(i).pct/max([out.pct])*100;
+end
+end
+
+
+function flag = hasNoRepeats(A)
+    flag = true;
+    A = sort(A);
+    for i=1:(numel(A)-1)
+        if A(i)==A(i+1)
+            flag = false;
+            break;
+        end
+    end
 end
